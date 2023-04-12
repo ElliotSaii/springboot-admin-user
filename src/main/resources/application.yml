@@ -1,0 +1,84 @@
+server:
+  port: 9898
+  undertow:
+    max-http-post-size: 30728640
+    buffer-size: 1024
+    max-parameters: 30728640
+    direct-buffers: true
+    eager-filter-init: true
+    threads:
+      io: 32
+      worker: 256
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  mvc:
+    async:
+      request-timeout: 20000
+  redis:
+    master:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      timeout: 10000
+      database: 0
+      connectionPool: 64
+      myredisson: |
+        singleServerConfig:
+          connectionPoolSize: 2048
+          pingConnectionInterval: 1000
+          subscriptionsPerConnection: 4096
+        transportMode: "NIO"
+        codec: !<org.redisson.codec.JsonJacksonCodec> {}
+    slave:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      timeout: 10000
+      database: 0
+
+  datasource:
+    hikari:
+      master:
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/poehub?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&verifyServerCertificate=false&autoReconnct=true&autoReconnectForPools=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+        hikari:
+          connection-timeout: 10000
+          validation-timeout: 3000
+          idle-timeout: 60000
+          login-timeout: 5
+          max-lifetime: 1800000
+          maximum-pool-size: 20
+          minimum-idle: 10
+          read-only: false
+          auto-commit: true
+          connection-test-query: SELECT 1
+      slave:
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/poehub?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&verifyServerCertificate=false&autoReconnct=true&autoReconnectForPools=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+        hikari:
+          connection-timeout: 10000
+          validation-timeout: 3000
+          idle-timeout: 60000
+          login-timeout: 5
+          max-lifetime: 1800000
+          maximum-pool-size: 20
+          minimum-idle: 10
+          read-only: false
+          auto-commit: true
+          connection-test-query: SELECT 1
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
